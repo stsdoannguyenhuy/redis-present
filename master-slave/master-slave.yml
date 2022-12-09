@@ -1,0 +1,29 @@
+version: "3.2"
+services:
+  redis-master:
+    container_name: redis-master
+    image: redis:latest
+    ports:
+      - "8001:6379"
+    volumes:
+      - D:\STS\redis_present\master-slave\master.conf:/usr/local/etc/redis/redis.conf
+      - D:\STS\redis_present\master-slave\master-sysctl.conf:/etc/sysctl.conf
+    networks:
+      - master-slave-network
+  redis-slave:
+    container_name: redis-slave
+    image: redis:latest
+    ports:
+      - "8002:6379"
+    volumes:
+      - D:\STS\redis_present\master-slave\slave.conf:/usr/local/etc/redis/redis.conf
+      - D:\STS\redis_present\master-slave\slave-sysctl.conf:/etc/sysctl.conf
+    networks:
+      - master-slave-network
+    depends_on:
+      - redis-master
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+networks:
+  master-slave-network:
+    driver: bridge
+

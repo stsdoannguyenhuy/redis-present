@@ -1,0 +1,21 @@
+version: "3.2"
+
+services:
+
+  redis-standalone:
+    container_name: redis-standalone
+    image: redis:latest
+    ports:
+      - "8000:6379"
+    networks:
+      - redis-standalone-network
+  redis-insight:
+    container_name: redis-insight
+    image: redislabs/redisinsight:latest
+    ports:
+      - "8001:8001"
+    networks:
+      - redis-standalone-network
+networks:
+  redis-standalone-network:
+    driver: bridge

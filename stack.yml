@@ -1,0 +1,9 @@
+version: "3.2"
+
+services:
+
+  redis-standalone:
+    container_name: redis-stack-server
+    image: redis/redis-stack-server:latest
+    ports:
+      - "8000:6379"
